@@ -56,8 +56,8 @@ class NewVisitorTest(unittest.TestCase):
         # "1: Buy groceries" as an item in a to-do list
         inputbox.send_keys(Keys.ENTER)
 
-        #import time
-        #time.sleep(2)
+        import time
+        time.sleep(1)
         self.check_for_row_in_list_table('1: Buy groceries')
         
 
@@ -67,6 +67,7 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys('Cook Dinner')
         inputbox.send_keys(Keys.ENTER)
 
+        time.sleep(1)
         # The page updates again, and now shows both items on her list
         self.check_for_row_in_list_table('1: Buy groceries')
         self.check_for_row_in_list_table('2: Cook Dinner')
