@@ -20,6 +20,11 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
     def test_can_start_a_list_and_retrieve_later(self):
 
         # Sandy wants a better way to keep track of to-do items, and heard
@@ -53,9 +58,8 @@ class NewVisitorTest(unittest.TestCase):
 
         #import time
         #time.sleep(2)
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: Buy groceries', [row.text for row in rows])
+        self.check_for_row_in_list_table('1: Buy groceries')
+        
 
         # There is still a text box inviting her to add another item. She
         # enters "Cook Dinner"
@@ -64,10 +68,8 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
 
         # The page updates again, and now shows both items on her list
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: Buy groceries', [row.text for row in rows])
-        self.assertIn('2: Cook Dinner', [row.text for row in rows])
+        self.check_for_row_in_list_table('1: Buy groceries')
+        self.check_for_row_in_list_table('2: Cook Dinner')
 
         # Sandy has to run to the store, but won't have her computer with her.
         # Then she sees that the site has generated a unique URL for her -- 
