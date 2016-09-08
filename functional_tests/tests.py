@@ -1,3 +1,4 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import WebDriverException
@@ -11,7 +12,7 @@ caps = DesiredCapabilities.FIREFOX
 caps["marionette"] = True
 caps["binary"] = "/Applications/Firefox.app/Contents/MacOS/firefox-bin"
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox(capabilities=caps)
@@ -29,14 +30,8 @@ class NewVisitorTest(unittest.TestCase):
 
         # Sandy wants a better way to keep track of to-do items, and heard
         # about a new app she could try, so she finds its homepage.
-        try:
-            self.browser.get('http://localhost:8000')
-        # Instead of your assert failing, you get a webdriver exception if 
-        # there's nothing listening on port 8000. This could mask other 
-        # failures.
-        except WebDriverException as e:
-            print("WebDriverException encountered: {}".format(e))
-        
+        self.browser.get(self.live_server_url)
+ 
         # She notices the homepage and header has To-Do in the title
         self.assertIn('To-Do', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
