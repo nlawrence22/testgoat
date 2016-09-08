@@ -4,6 +4,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 import unittest
+import time
 
 # The default firefoxDriver no longer plays nice with FF 48+ so we need to use
 # the marionette driver instead.  Details here:
@@ -50,11 +51,10 @@ class NewVisitorTest(LiveServerTestCase):
         # When she hits enter, she is taken to a new URL. The page now lists
         # "1: Buy groceries" as an item in a to-do list table.
         inputbox.send_keys(Keys.ENTER)
+        
+        time.sleep(1)
         sandy_list_url = self.browser.current_url
         self.assertRegex(sandy_list_url, '/lists/.+')
-
-        import time
-        time.sleep(1)
         self.check_for_row_in_list_table('1: Buy groceries')
         
 
@@ -88,7 +88,8 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Go skydiving')
         inputbox.send_keys(Keys.ENTER)
-
+        time.sleep(1)
+        
         # Nicholas gets his own unique URL
         nicholas_list_url = self.browser.current_url
         self.assertRegex(nicholas_list_url, 'lists/.+')
