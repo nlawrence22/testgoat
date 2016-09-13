@@ -98,10 +98,10 @@ class NewVisitorTest(LiveServerTestCase):
         #Again, there is no trace of Sandy's list
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy groceries', page_text)
-        self.assertIn('Go skydiving')
+        self.assertIn('Go skydiving', page_text)
 
         # Satisfied, she turns off her computer
-        browser.quit()
+        self.browser.quit()
     
 if __name__ == '__main__':
     unittest.main(warnings='ignore')    
