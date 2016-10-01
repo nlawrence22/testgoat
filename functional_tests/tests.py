@@ -1,4 +1,4 @@
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import WebDriverException
@@ -13,7 +13,7 @@ caps = DesiredCapabilities.FIREFOX
 caps["marionette"] = True
 caps["binary"] = "/Applications/Firefox.app/Contents/MacOS/firefox-bin"
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox(capabilities=caps)
